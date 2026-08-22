@@ -22,9 +22,9 @@ const CONFIG = {
 
   // Isi url dengan path foto, atau kosongkan "" untuk placeholder
   foto: [
-    { url: "assets/ngonser.jpg", caption: "Ngilang 2 hari langsung diajak ngonser wkwk" },
-    { url: "assets/lovers.jpeg", caption: "Avv lopersan nih ye><" },
-    { url: "assets/vc.jpeg", caption: "Luthu naa cowokku boboo xixixii" },
+    { url: "assets/ngonser.jpg",  caption: "Ngilang 2 hari langsung diajak ngonser wkwk" },
+    { url: "assets/lovers.jpeg",  caption: "Avv lopersan nih ye><" },
+    { url: "assets/vc.jpeg",      caption: "Luthu naa cowokku boboo xixixii" },
   ],
 
   jumlahGigitan: 5,
