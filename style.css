@@ -788,11 +788,6 @@ p.lede {
     padding: 32px 24px 28px;
   }
 
-  .gallery-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
-  }
-
   .reveal-frame {
     width: 280px;
     height: 187px;
