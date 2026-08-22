@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kejutan Untukmu 🎁</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,500&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- Background layers -->
+  <div class="bg-gradient"></div>
+  <div class="bg-dots"></div>
+
+  <!-- Canvas layers -->
+  <canvas id="particle-canvas"></canvas>
+  <canvas id="confetti-canvas"></canvas>
+
+  <!-- Progress dots -->
+  <div class="progress" id="progress"></div>
+
+  <!-- Tombol musik (muncul setelah kado dibuka) -->
+  <button
+    class="music-btn"
+    id="music-btn"
+    onclick="toggleMusic()"
+    aria-label="Putar musik"
+    style="display: none;"
+  >♪</button>
+
+  <main class="app">
+
+    <!-- ============================================================
+         HALAMAN 1 — OPENING / KADO
+         ============================================================ -->
+    <section class="stage" id="stage-opening" data-step="0">
+      <span class="eyebrow">— mini surprise —</span>
+      <div class="opening-wrap">
+        <div
+          class="gift-icon"
+          id="gift-icon"
+          role="button"
+          tabindex="0"
+          aria-label="Klik untuk membuka kado"
+        >🎁</div>
+        <h1 class="headline">buka kado nya<br><em>dongg~</em></h1>
+        <p class="opening-hint">klik kado nya yaa ✨</p>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         HALAMAN 2 — SURAT CINTA
+         ============================================================ -->
+    <section class="stage" id="stage-letter" data-step="1" hidden>
+      <span class="eyebrow">— love letter —</span>
+      <div class="letter-wrapper">
+        <p class="letter-date" id="letter-date"></p>
+        <div class="letter-card">
+          <p class="letter-greeting" id="letter-greeting"></p>
+          <div class="letter-body" id="letter-body"></div>
+          <div class="letter-signoff" id="letter-signoff"></div>
+        </div>
+      </div>
+      <button class="btn" onclick="goTo('gallery')">Liat kenangan kita yuu →</button>
+    </section>
+
+    <!-- ============================================================
+         HALAMAN 3 — GALERI KENANGAN
+         ============================================================ -->
+    <section class="stage" id="stage-gallery" data-step="2" hidden>
+      <span class="eyebrow">— our moments —</span>
+      <h1 class="headline">Momen yang<br><em>aku suka</em></h1>
+      <div class="divider">✦</div>
+      <div class="gallery-grid" id="gallery-grid"></div>
+      <p class="gallery-note">Pastinya semua momen yang kita lakukan itu berharga buat aku asalkan orang itu selalu kamu.</p>
+      <button class="btn" onclick="goTo('cake')">Ada satu lagi nihh →</button>
+    </section>
+
+    <!-- ============================================================
+         HALAMAN 4 — MINI GAME GIGIT KUE
+         ============================================================ -->
+    <section class="stage" id="stage-cake" data-step="3" hidden>
+      <span class="eyebrow">— mini game —</span>
+      <h1 class="headline" id="cake-headline" style="margin-bottom: 20px;">Gigit kuenya<br><em>sampai habis!</em></h1>
+
+      <div class="cake-game">
+
+        <!-- Kue interaktif -->
+        <div
+          class="cake-icon-wrap"
+          id="cake-wrap"
+          role="button"
+          tabindex="0"
+          aria-label="Gigit kue nya sayangg"
+        >
+          <span class="cake-icon" id="cake-icon">🎂</span>
+        </div>
+
+        <!-- Counter & progress bar -->
+        <div id="bite-info">
+          <p class="bite-counter" id="bite-count">0/5 gigitan</p>
+          <div class="bite-bar">
+            <div class="bite-bar-fill" id="bite-bar-fill"></div>
+          </div>
+        </div>
+
+        <!-- Reveal foto setelah kue habis -->
+        <div class="cake-reveal" id="cake-reveal">
+          <div class="reveal-frame" id="reveal-frame"></div>
+          <p class="reveal-caption" id="reveal-caption"></p>
+        </div>
+
+      </div>
+
+      <button
+        class="btn"
+        id="btn-to-final"
+        onclick="goTo('final')"
+        style="display: none; margin-top: 8px;"
+      >Yahh udah mau selesai →</button>
+    </section>
+
+    <!-- ============================================================
+         HALAMAN 5 — PENUTUP
+         ============================================================ -->
+    <section class="stage" id="stage-final" data-step="4" hidden>
+      <span class="eyebrow">— last but not least —</span>
+      <div class="final-deco" id="final-deco">🌿</div>
+      <h1 class="headline" style="font-size: clamp(18px, 3.5vw, 28px);">Semoga hari ini<br><em>menjadi salah satu hari terbaik yang pernah kamu jalanii.</em></h1>
+      <p class="lede" id="final-text"></p>
+      <p class="final-mark" id="pengirim-mark"></p>
+      <button class="btn ghost" onclick="restart()" style="margin-top: 32px;">
+        ↺ Mau liat lagi kah?
+      </button>
+    </section>
+
+  </main>
+
+  <!-- Lightbox overlay -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Foto diperbesar" hidden>
+    <div class="lightbox-backdrop" id="lightbox-backdrop"></div>
+    <div class="lightbox-content">
+      <img class="lightbox-img" id="lightbox-img" src="" alt="">
+      <div class="lightbox-actions">
+        <a class="lightbox-btn" id="lightbox-download" download aria-label="Download foto">
+          ↓ Download
+        </a>
+        <button class="lightbox-btn lightbox-close" id="lightbox-close" aria-label="Tutup">
+          ✕ Tutup
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+
+</body>
+
+</html>

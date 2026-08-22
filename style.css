@@ -1,0 +1,793 @@
+/* ================================================================
+   BIRTHDAY SURPRISE — Stylesheet
+   Tema: Sage Green Pastel | Font: Playfair Display + Poppins
+   ================================================================ */
+
+/* ---------- CSS Variables ---------- */
+:root {
+  --bg:          #f0f7f2;
+  --bg-mid:      #e4f0e9;
+  --surface:     #ffffff;
+  --surface-alt: #f7fbf8;
+  --sage:        #7daa8f;
+  --sage-dark:   #4e8268;
+  --sage-light:  #b2d4bf;
+  --sage-pale:   #d9ede1;
+  --mint:        #a8d5b5;
+  --teal:        #5a9e82;
+  --text:        #2d4a38;
+  --text-mid:    #527a62;
+  --text-soft:   #8aaa96;
+  --cream:       #fdf9f4;
+  --gold-accent: #c4a882;
+}
+
+/* ---------- Reset ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ---------- Base ---------- */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Poppins', sans-serif;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* ---------- Animated gradient background ---------- */
+.bg-gradient {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background: linear-gradient(
+    135deg,
+    #d9ede1 0%,
+    #e8f4ec 25%,
+    #f0f7f2 50%,
+    #dff0e7 75%,
+    #cce4d6 100%
+  );
+  background-size: 400% 400%;
+  animation: gradient-shift 12s ease infinite;
+}
+
+@keyframes gradient-shift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ---------- Dot grid overlay ---------- */
+.bg-dots {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background-image: radial-gradient(circle, rgba(78, 130, 104, 0.15) 1.5px, transparent 1.5px);
+  background-size: 32px 32px;
+}
+
+/* ---------- Particle canvas ---------- */
+#particle-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* ---------- Confetti canvas ---------- */
+#confetti-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  pointer-events: none;
+}
+
+/* ---------- App wrapper ---------- */
+.app {
+  position: relative;
+  z-index: 10;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+/* ---------- Progress indicator ---------- */
+.progress {
+  position: fixed;
+  top: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 50;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.progress-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--sage-light);
+  transition: all 0.4s ease;
+}
+
+.progress-dot.active {
+  background: var(--sage-dark);
+  transform: scale(1.4);
+}
+
+.progress-dot.done {
+  background: var(--sage);
+}
+
+/* ---------- Stage / Section ---------- */
+.stage {
+  width: 100%;
+  max-width: 680px;
+  text-align: center;
+}
+
+.stage.fade-in {
+  animation: fadeInUp 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.stage.fade-out {
+  animation: fadeOutDown 0.4s cubic-bezier(0.4, 0, 1, 1) both;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(32px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeOutDown {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-24px);
+  }
+}
+
+section[hidden] {
+  display: none !important;
+}
+
+/* ---------- Eyebrow label ---------- */
+.eyebrow {
+  display: inline-block;
+  font-family: 'Poppins', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 16px;
+  opacity: 0.85;
+}
+
+/* ---------- Typography ---------- */
+h1.headline {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(28px, 5vw, 48px);
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--text);
+  margin-bottom: 16px;
+}
+
+h1.headline em {
+  color: var(--teal);
+  font-style: italic;
+}
+
+p.lede {
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--text-mid);
+  max-width: 480px;
+  margin: 0 auto 32px;
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-block;
+  appearance: none;
+  border: none;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  padding: 14px 36px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--sage-dark), var(--teal));
+  color: #fff;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  box-shadow: 0 6px 20px rgba(78, 130, 104, 0.35);
+}
+
+.btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(78, 130, 104, 0.45);
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: 4px;
+}
+
+.btn.ghost {
+  background: transparent;
+  color: var(--sage-dark);
+  border: 1.5px solid var(--sage);
+  box-shadow: none;
+  margin-top: 12px;
+}
+
+.btn.ghost:hover {
+  background: var(--sage-pale);
+  box-shadow: none;
+}
+
+/* ================================================================
+   HALAMAN 1 — OPENING / KADO
+   ================================================================ */
+.opening-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+}
+
+.gift-icon {
+  font-size: 180px;
+  line-height: 1;
+  animation: bounce 1.8s ease-in-out infinite;
+  cursor: pointer;
+  filter: drop-shadow(0 12px 20px rgba(78, 130, 104, 0.25));
+  transition: transform 0.15s ease;
+  user-select: none;
+}
+
+.gift-icon:active {
+  transform: scale(0.9);
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  40%       { transform: translateY(-18px); }
+  60%       { transform: translateY(-10px); }
+}
+
+.opening-hint {
+  font-size: 13px;
+  color: var(--text-soft);
+  letter-spacing: 0.05em;
+}
+
+/* ================================================================
+   HALAMAN 2 — SURAT CINTA
+   ================================================================ */
+.letter-wrapper {
+  text-align: left;
+}
+
+.letter-date {
+  font-size: 12px;
+  color: var(--text-soft);
+  letter-spacing: 0.1em;
+  margin-bottom: 28px;
+  text-align: center;
+}
+
+.letter-card {
+  background: var(--cream);
+  border-radius: 24px;
+  padding: 40px 40px 32px;
+  position: relative;
+  box-shadow:
+    0 2px 0 var(--sage-light),
+    0 8px 32px rgba(78, 130, 104, 0.1);
+  border: 1px solid var(--sage-pale);
+  margin-bottom: 24px;
+  text-align: left;
+}
+
+/* Dekorasi quote mark */
+.letter-card::before {
+  content: '"';
+  font-family: 'Playfair Display', serif;
+  font-size: 100px;
+  line-height: 1;
+  color: var(--sage-pale);
+  position: absolute;
+  top: 8px;
+  left: 24px;
+  pointer-events: none;
+}
+
+.letter-greeting {
+  font-family: 'Playfair Display', serif;
+  font-size: 21px;
+  color: var(--teal);
+  margin-bottom: 20px;
+}
+
+.letter-body {
+  font-size: 14.5px;
+  line-height: 1.9;
+  color: var(--text-mid);
+}
+
+.letter-body p {
+  margin-bottom: 14px;
+  opacity: 0;
+  transform: translateY(8px);
+  animation: fadeUp 0.5s ease forwards;
+}
+
+.letter-body p:last-child {
+  margin-bottom: 0;
+}
+
+@keyframes fadeUp {
+  to { opacity: 1; transform: none; }
+}
+
+.letter-signoff {
+  text-align: right;
+  margin-top: 28px;
+  font-family: 'Playfair Display', serif;
+  font-size: 18px;
+  color: var(--sage-dark);
+}
+
+/* ================================================================
+   HALAMAN 3 — GALERI KENANGAN
+   ================================================================ */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 24px;
+  margin: 28px 0 0;
+}
+
+.gallery-note {
+  font-size: 13px;
+  font-style: italic;
+  color: var(--text-soft);
+  margin: 18px auto 28px;
+  max-width: 420px;
+  line-height: 1.7;
+}
+
+.polaroid {
+  background: #fff;
+  padding: 12px 12px 20px;
+  border-radius: 4px;
+  box-shadow: 0 8px 24px rgba(78, 130, 104, 0.15);
+  transform: rotate(var(--rot, -2.5deg));
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.3s ease;
+  cursor: default;
+}
+
+.polaroid:nth-child(2n)  { --rot:  2deg; }
+.polaroid:nth-child(3n)  { --rot: -3.5deg; }
+.polaroid:nth-child(4n)  { --rot:  1.5deg; }
+
+.polaroid:hover {
+  transform: rotate(0deg) scale(1.06);
+  box-shadow: 0 18px 40px rgba(78, 130, 104, 0.25);
+  z-index: 5;
+  position: relative;
+}
+
+.polaroid-photo {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 2px;
+  overflow: hidden;
+  background: linear-gradient(135deg, var(--sage-pale), var(--mint));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+}
+
+.polaroid-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  cursor: zoom-in;
+}
+
+.polaroid-caption {
+  display: block;
+  margin-top: 10px;
+  font-size: 11.5px;
+  color: var(--text-mid);
+  text-align: center;
+  font-family: 'Poppins', sans-serif;
+  line-height: 1.4;
+}
+
+/* ================================================================
+   HALAMAN 4 — MINI GAME GIGIT KUE
+   ================================================================ */
+.cake-game {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.cake-icon-wrap {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  user-select: none;
+}
+
+.cake-icon {
+  font-size: 200px;
+  line-height: 1;
+  display: block;
+  transition: transform 0.1s ease;
+  filter: drop-shadow(0 12px 20px rgba(78, 130, 104, 0.2));
+}
+
+.cake-icon-wrap.shake {
+  animation: cake-shake 0.3s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+}
+
+@keyframes cake-shake {
+  0%, 100% { transform: rotate(0deg); }
+  20%  { transform: rotate(-8deg) scale(1.08); }
+  40%  { transform: rotate(7deg) scale(1.05); }
+  60%  { transform: rotate(-5deg); }
+  80%  { transform: rotate(4deg); }
+}
+
+.bite-counter {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-mid);
+  letter-spacing: 0.05em;
+}
+
+.bite-bar {
+  width: 200px;
+  height: 8px;
+  background: var(--sage-pale);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.bite-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--sage), var(--teal));
+  border-radius: 999px;
+  width: 0%;
+  transition: width 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Foto penutup setelah kue habis */
+.cake-reveal {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  animation: fadeInUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.cake-reveal.show {
+  display: flex;
+}
+
+.reveal-frame {
+  width: 320px;
+  height: 213px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow:
+    0 0 0 4px var(--sage),
+    0 0 0 8px var(--sage-light),
+    0 16px 40px rgba(78, 130, 104, 0.25);
+}
+
+.reveal-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  cursor: zoom-in;
+}
+
+.reveal-frame .reveal-fallback {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, var(--sage-pale), var(--mint));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 60px;
+}
+
+.reveal-caption {
+  font-family: 'Playfair Display', serif;
+  font-size: 16px;
+  color: var(--sage-dark);
+  max-width: 360px;
+  line-height: 1.5;
+}
+
+/* ================================================================
+   HALAMAN 5 — PENUTUP
+   ================================================================ */
+.final-deco {
+  font-size: 52px;
+  margin-bottom: 16px;
+  animation: pulse-heart 1.4s ease-in-out infinite;
+}
+
+.final-deco.has-photo {
+  animation: none;
+  font-size: unset;
+  margin-bottom: 28px;
+}
+
+.final-deco.has-photo img {
+  width: 100%;
+  max-width: 240px;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 14px;
+  display: block;
+  margin: 0 auto;
+  box-shadow: none;
+}
+
+@keyframes pulse-heart {
+  0%, 100% { transform: scale(1); }
+  50%       { transform: scale(1.15); }
+}
+
+.final-mark {
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-soft);
+  margin-top: 28px;
+}
+
+/* ================================================================
+   DECORATIVE DIVIDER
+   ================================================================ */
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 auto 28px;
+  max-width: 280px;
+  color: var(--sage-light);
+  font-size: 14px;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--sage-light);
+}
+
+/* ================================================================
+   LIGHTBOX
+   ================================================================ */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.lightbox[hidden] {
+  display: none !important;
+}
+
+.lightbox.lb-in .lightbox-content {
+  animation: lb-zoom-in 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.lightbox.lb-out .lightbox-content {
+  animation: lb-zoom-out 0.25s cubic-bezier(0.4, 0, 1, 1) both;
+}
+
+@keyframes lb-zoom-in {
+  from { opacity: 0; transform: scale(0.82); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes lb-zoom-out {
+  from { opacity: 1; transform: scale(1); }
+  to   { opacity: 0; transform: scale(0.82); }
+}
+
+.lightbox-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(20, 40, 28, 0.72);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  cursor: zoom-out;
+}
+
+.lightbox-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  max-width: min(90vw, 860px);
+}
+
+.lightbox-img {
+  display: block;
+  max-width: 100%;
+  max-height: 78vh;
+  border-radius: 16px;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.45);
+  object-fit: contain;
+}
+
+.lightbox-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.lightbox-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 10px 24px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  background: linear-gradient(135deg, var(--sage-dark), var(--teal));
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(78, 130, 104, 0.35);
+}
+
+.lightbox-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(78, 130, 104, 0.45);
+}
+
+.lightbox-btn:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
+
+.lightbox-close {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
+  box-shadow: none;
+}
+
+.lightbox-close:hover {
+  background: rgba(255, 255, 255, 0.25);
+  box-shadow: none;
+}
+
+/* ================================================================
+   MUSIC BUTTON
+   ================================================================ */
+.music-btn {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 60;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--sage-dark), var(--teal));
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(78, 130, 104, 0.4);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  animation: music-pop 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.music-btn:hover {
+  transform: scale(1.12);
+  box-shadow: 0 8px 24px rgba(78, 130, 104, 0.5);
+}
+
+.music-btn:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: 3px;
+}
+
+@keyframes music-pop {
+  from { opacity: 0; transform: scale(0.5); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* ================================================================
+   RESPONSIVE
+   ================================================================ */
+@media (max-width: 480px) {
+  .app {
+    padding: 60px 16px 40px;
+  }
+
+  .letter-card {
+    padding: 32px 24px 28px;
+  }
+
+  .gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .reveal-frame {
+    width: 280px;
+    height: 187px;
+  }
+
+  .gift-icon {
+    font-size: 120px;
+  }
+
+  .cake-icon {
+    font-size: 140px;
+  }
+}
