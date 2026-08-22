@@ -225,12 +225,25 @@ animateConfetti();
 /* ================================================================
    PROGRESS DOTS
    ================================================================ */
+const STEP_LABELS = [
+  '— mini surprise —',
+  '— love letter —',
+  '— our moments —',
+  '— mini game —',
+  '— last but not least —',
+];
+
 function renderProgress(idx) {
   const wrap = document.getElementById('progress');
-  wrap.innerHTML = STEPS.map((_, i) => {
+  const dots = STEPS.map((_, i) => {
     const cls = i === idx ? 'active' : i < idx ? 'done' : '';
     return `<div class="progress-dot ${cls}"></div>`;
   }).join('');
+
+  wrap.innerHTML = `
+    <div class="progress-dots">${dots}</div>
+    <span class="progress-label">${STEP_LABELS[idx]}</span>
+  `;
 }
 
 /* ================================================================

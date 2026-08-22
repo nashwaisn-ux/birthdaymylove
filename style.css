@@ -121,8 +121,26 @@ body {
   transform: translateX(-50%);
   z-index: 50;
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.progress-dots {
+  display: flex;
   gap: 8px;
   align-items: center;
+}
+
+.progress-label {
+  font-family: 'Poppins', sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--teal);
+  opacity: 0.85;
+  white-space: nowrap;
 }
 
 .progress-dot {
