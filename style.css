@@ -800,4 +800,17 @@ p.lede {
   .cake-icon {
     font-size: 140px;
   }
+  
+  .gallery-grid {
+    gap: 8px; /* Perkecil jarak antar polaroid */
+  }
+
+  .polaroid {
+    padding: 6px 6px 12px; /* Perkecil padding kertas polaroid */
+  }
+
+  .polaroid-caption {
+    font-size: 9.5px; /* Perkecil font agar teks tidak memaksa lebar kolom */
+    word-break: break-word;
+  }
 }
